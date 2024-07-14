@@ -1,27 +1,44 @@
-const axios = require("axios");
+const axios = require('axios');
+const ChatResponse = require('../models/ChatResponse');
 
-exports.chat = async (req, res) => {
+const chat = async (req, res) => {
   const { message } = req.body;
-
   try {
-    const response = await axios.post(
-      "https://api.opentyphoon.ai/v1/chat/completions",
+    const chat_response = await axios.post(
+      'https://api.opentyphoon.ai/v1/chat/completions',
       {
-        model: "typhoon-v1.5x-70b-instruct",
-        messages: [{"role": "user", "content": message}],
+        model: 'typhoon-v1.5-instruct',
+        max_tokens: 512,
+        messages: [{ role: 'user', content: message }],
+        temperature: 0.3,
+        top_p: 0.9,
+        top_k: 0,
+        repetition_penalty: 1.05,
+        min_p: 0,
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPEN_TYPHOON_API_KEY}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.TYPHOON_API_KEY}`,
         },
       }
     );
 
-    console.log("Response:", response.data.choices[0].message.content);
-    res.json(response.data.choices[0].message.content); // Send the response back to the client
+    const chatContent = chat_response.data.choices[0].message.content;
+    const timestamp = new Date();
+
+    // Store the chat content and timestamp in the PostgreSQL database using the model
+    try {
+      const newChatResponse = await ChatResponse.create(chatContent, timestamp);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    res.json(chatContent);
   } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ error: "Failed to send message to Typhoon API" });
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+module.exports = { chat };
