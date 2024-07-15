@@ -17,7 +17,7 @@ export default function CalendarDetailModal({ isOpen, onRequestClose, appointmen
     <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
       <h2 className="text-2xl font-semibold mb-4">Appointment Details</h2>
       <div className="mb-2">
-        <strong>Title:</strong> {appointment.title}
+        <strong>Service:</strong> {appointment.service}
       </div>
       <div className="mb-2">
         <strong>Date:</strong> {new Date(appointment.date).toLocaleString()}
@@ -26,10 +26,25 @@ export default function CalendarDetailModal({ isOpen, onRequestClose, appointmen
         <strong>Address:</strong> {appointment.address}
       </div>
       <div className="mb-2">
-        <strong>Name:</strong> {appointment.name}
+        <strong>Vehicle Number:</strong> {appointment.vehicleNumber}
       </div>
       <div className="mb-2">
-        <strong>Description:</strong> {appointment.description}
+        <strong>Brand:</strong> {appointment.brand}
+      </div>
+      <div className="mb-2">
+        <strong>Model:</strong> {appointment.model}
+      </div>
+      <div className="mb-2">
+        <strong>Problem:</strong> {appointment.problem}
+      </div>
+      <div className="mb-2">
+        <strong>Name:</strong> {appointment.fname} {appointment.lname}
+      </div>
+      <div className="mb-2">
+        <strong>Phone Number:</strong> {appointment.phoneNumber}
+      </div>
+      <div className="mb-2">
+        <strong>Email:</strong> {appointment.email}
       </div>
       <div className="flex justify-end space-x-4">
         <button onClick={() => onEdit(appointment)} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
