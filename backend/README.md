@@ -8,10 +8,8 @@ Install my-project with npm
   npm install 
 ```
 
-## intiae the project
+## intiate the project
 
 ```bash
- docker compose up -d
-
  npm start
  ```

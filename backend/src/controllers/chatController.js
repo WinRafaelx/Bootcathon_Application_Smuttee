@@ -1,5 +1,5 @@
 const axios = require('axios');
-const ChatResponse = require('../models/ChatResponse');
+const chatModel = require('../models/ChatModel');
 
 const chat = async (req, res) => {
   const { message } = req.body;
@@ -24,16 +24,14 @@ const chat = async (req, res) => {
     );
 
     const chatContent = chat_response.data.choices[0].message.content;
-    const timestamp = new Date();
 
-    // Store the chat content and timestamp in the PostgreSQL database using the model
-    try {
-      const newChatResponse = await ChatResponse.create(chatContent, timestamp);
-    } catch (error) {
+    const newChat = new chatModel({ prompt: message });
+    
+    await newChat.save().catch((error) => {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
-    }
-
+    });
+    
     res.json(chatContent);
   } catch (error) {
     console.error(error);

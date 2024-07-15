@@ -1,22 +1,13 @@
-require('dotenv').config();
-const { Client } = require('pg');
+const mongoose = require('mongoose');
 
-const dbConfig = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
+const connectDB = async () => {
+  try {
+    await mongoose.connect('mongodb://localhost:27017/Exxon_Support');
+    console.log('MongoDB connected');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    process.exit(1);
+  }
 };
 
-const client = new Client(dbConfig);
-
-client.connect()
-  .then(() => {
-    console.log('Connected to PostgreSQL database');
-  })
-  .catch(err => {
-    console.error('Error connecting to PostgreSQL database', err);
-  });
-
-module.exports = client;
+module.exports = { connectDB };
