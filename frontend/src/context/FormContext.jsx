@@ -9,6 +9,7 @@ export const FormProvider = ({ children }) => {
     service: '',
     date: '',
     location: '',
+    workshop: '',
     vehicleNumber: '',
     brand: '',
     model: '',
