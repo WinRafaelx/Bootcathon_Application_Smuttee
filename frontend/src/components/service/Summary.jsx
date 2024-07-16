@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormContext } from "../../context/FormContext";
-import { workshop } from "../../constants/workshopLocation";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Summary() {
   const { formData, prevStep } = useFormContext();
   const navigate = useNavigate();
+  const [workshop, setWorkshop] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      axios.get("http://localhost:8000/api/workshops").then((response) => {
+        setWorkshop(response.data);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }, []);
 
   function validateFormData(formData) {
     // Iterate over each key in the formData object
@@ -14,7 +27,7 @@ export default function Summary() {
       // Check if the property is a direct property of formData and not from its prototype chain
       if (formData.hasOwnProperty(key)) {
         // Check if the value is an empty string
-        if (formData[key].trim() === '') {
+        if (formData[key].trim() === "") {
           // Return false if any value is an empty string
           return false;
         }
@@ -24,29 +37,30 @@ export default function Summary() {
     return true;
   }
 
-  function findworkshopLocation(workshopArray,workshop_id) {
-    const workshop = workshopArray.find(w => w.workshop_id === workshop_id);
-    return workshop ? workshop.location : null;
+  function findworkshopLocation(workshopArray, workshop_id) {
+    const workshop = workshopArray.find((w) => w._id === workshop_id);
+    return workshop ? workshop.address : null;
   }
   const handleSubmit = async () => {
     if (validateFormData(formData)) {
       try {
-        const response = await axios.post("http://localhost:8000/api/reservations/add", formData);
+        const response = await axios.post(
+          "http://localhost:8000/api/reservations/add",
+          formData
+        );
         if (response.status === 201) {
           alert("Reservation submitted successfully");
           navigate("/complete");
         } else {
           alert("Error submitting reservation");
         }
-      }
-      catch (error) {
-        console.error("api error",error);
+      } catch (error) {
+        console.error("api error", error);
         alert("Error submitting reservation");
       }
     } else {
       alert("Please fill in all fields");
     }
-
   };
   return (
     <div className="mx-40">
@@ -62,7 +76,7 @@ export default function Summary() {
         </div>
         <div className="mb-4">
           <h3 className="font-bold">สถานที่</h3>
-          <p>{findworkshopLocation(workshop,formData.workshop_id)}</p>
+          <p>{findworkshopLocation(workshop, formData.workshop_id)}</p>
         </div>
         <div className="mb-4">
           <h3 className="font-bold">ข้อมูลรถ</h3>

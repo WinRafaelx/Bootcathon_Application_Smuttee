@@ -1,13 +1,26 @@
-import React from "react";
+import React,{ useState, useEffect} from "react";
 import { useFormContext } from "../../context/FormContext";
-import { workshop } from "../../constants/workshopLocation";
-
+import axios from "axios";
 
 export default function DateandLocation() {
   const { formData, handleChange, nextStep, prevStep } = useFormContext();
+  const [workshop, setWorkshop] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      axios.get("http://localhost:8000/api/workshops").then((response) => {
+        setWorkshop(response.data);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }, [workshop]);
 
   const handleClick = (workshop) => {
-    handleChange("workshop_id")({ target: { value: workshop.workshop_id } });
+    handleChange("workshop_id")({ target: { value: workshop._id } });
   };
 
   return (
@@ -38,9 +51,8 @@ export default function DateandLocation() {
           <input
             type="text"
             className="input input-bordered w-full"
-            placeholder="Enter your location"
-            value={formData.location}
-            onChange={handleChange("location")}
+            placeholder="ตำแหน่งปัจจุบัน"
+            disabled
           />
         </div>
       </div>
@@ -51,20 +63,20 @@ export default function DateandLocation() {
       <div className="mx-40">
         {workshop.map((workshop) => (
           <div
-            key={workshop.workshop_id}
+            key={workshop._id}
             className={`grid grid-cols-5 w-full rounded-lg shadow-lg mb-4 cursor-pointer  ${
-              formData.workshop_id === workshop.workshop_id
+              formData.workshop_id === workshop._id
                 ? "bg-primary text-white"
                 : "bg-white"
             } `}
             onClick={() => handleClick(workshop)}
           >
             <div className="col-span-2 m-4">
-              <div className="text-xl font-bold underline">{workshop.company}</div>
-              <div>{workshop.location}</div>
+              <div className="text-xl font-bold underline">{workshop.company_name}</div>
+              <div>{workshop.address}</div>
             </div>
             <div className="col-span-2 m-4">
-              <div>เบอร์โทรศัพท์ {workshop.phone}</div>
+              <div>เบอร์โทรศัพท์ {workshop.tel}</div>
               <div>{workshop.openTime}</div>
               <div>{workshop.openDays}</div>
             </div>
