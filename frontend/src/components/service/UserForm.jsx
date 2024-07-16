@@ -6,6 +6,7 @@ export default function UserForm() {
   return (
     <>
       <h2 className="text-3xl text-center font-bold my-4">User Details</h2>
+  <div className="mx-96">
       <div className="flex flex-col w-full bg-white rounded-lg shadow-lg p-4">
         <div className="mb-4">
           <label className="block text-gray-700">First Name</label>
@@ -48,6 +49,7 @@ export default function UserForm() {
           />
         </div>
       </div>
+        </div>
       <div className="flex m-4 justify-center">
         <button onClick={prevStep} className="btn">
           Back

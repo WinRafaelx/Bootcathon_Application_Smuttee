@@ -2,11 +2,31 @@ import React from "react";
 import { useFormContext } from "../../context/FormContext";
 
 export default function Summary() {
-  const { formData, prevStep, setStep } = useFormContext();
+  const { formData, prevStep } = useFormContext();
 
+  function validateFormData(formData) {
+    // Iterate over each key in the formData object
+    for (const key in formData) {
+      // Check if the property is a direct property of formData and not from its prototype chain
+      if (formData.hasOwnProperty(key)) {
+        // Check if the value is an empty string
+        if (formData[key].trim() === '') {
+          // Return false if any value is an empty string
+          return false;
+        }
+      }
+    }
+    // Return true if all values are not empty strings
+    return true;
+  }
   const handleSubmit = () => {
-    alert("Form submitted!");
-    console.log(formData);
+    if (validateFormData(formData)) {
+      // TODO: Submit form data to the server
+      alert("Form submitted successfully");
+    } else {
+      alert("Please fill in all fields");
+    }
+
   };
   return (
     <div className="mx-40">

@@ -45,7 +45,7 @@ export default function ServiceSelection() {
   };
   return (
     <div className="p-4">
-      <h2 className="text-3xl text-center font-bold mb-4">Select Service</h2>
+      <h2 className="text-3xl text-center font-bold mb-4">เลือกบริการ</h2>
       <div className="grid grid-cols-3 gap-4">
         {options.map((option) => (
           <div
