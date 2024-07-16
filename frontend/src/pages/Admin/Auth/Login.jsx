@@ -1,94 +1,65 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const jsonData = {
-      email: data.get("email"),
-      password: data.get("password"),
-    };
+  const { login } = useContext(AuthContext);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const naigate = useNavigate();
 
-    alert("Login Successful");
-    console.log(jsonData);
-
-    // try {
-    //   const response = await axios.post(
-    // "http://localhost:3333/admin/auth/login",
-    //     jsonData,
-    //   );
-    //   if (response.data.status === "ok") {
-    //     alert("Login Successful");
-    //     window.location = "/admin";
-    //   } else {
-    //     alert("Login Failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(username, password);
+      naigate('/admin');
+    } catch (error) {
+      console.error('Failed to login', error);
+    }
   };
-  return (
-    <div className="h-screen">
-      <div className="flex min-h-full flex-col justify-center content-center px-6 py-12 ">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Login
-          </h2>
-        </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
+  return (
+    <div className="flex h-screen flex-col justify-center content-center items-center px-6 py-12 ">
+          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+            <form className="card-body" onSubmit={handleSubmit}>
+            <h2 className="text-3xl font-bold text-center">เข้าสู่ระบบ</h2>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Username</span>
+                </label>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
+                  type="text"
+                  placeholder="username"
+                  className="input input-bordered"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={username} 
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="password"
+                  className="input input-bordered"
+                  required
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <label className="label">
+                  <a href="/admin/signup" className="label-text-alt link link-hover underline">
+                    ลงทะเบียนครั้งแรก
+                  </a>
                 </label>
               </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+              <div className="form-control mt-6">
+                <button className="btn btn-primary" type="submit">เข้าสู่ระบบ</button>
               </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 "
-              >
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+            </form>
+          </div>
     </div>
   );
 }
