@@ -5,7 +5,7 @@ const getReservationFromWorkshopID = async (req, res) => {
   const { workshop_id } = req.params;
 
   try {
-    const reservations = await ClientReservationModel.find({ workshop_id });
+    const reservations = await ClientReservationModel.find({ workshop_id: workshop_id });
     console.log(reservations);
     res.json(reservations);
   } catch (err) {
