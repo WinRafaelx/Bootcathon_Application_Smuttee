@@ -5,6 +5,6 @@ const chatSchema = new mongoose.Schema({
   datetime: { type: Date, default: Date.now }
 });
 
-const chatModel = mongoose.model('chats', chatSchema);
+const chatModel = mongoose.model('Chat', chatSchema);
 
 module.exports = chatModel;
