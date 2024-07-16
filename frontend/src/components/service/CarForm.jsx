@@ -15,8 +15,8 @@ export default function CarForm() {
               type="text"
               className="input input-bordered w-full"
               placeholder="Enter vehicle number"
-              value={formData.vehicleNumber}
-              onChange={handleChange("vehicleNumber")}
+              value={formData.license_plate}
+              onChange={handleChange("license_plate")}
             />
           </div>
           <div className="mb-4">
@@ -25,8 +25,8 @@ export default function CarForm() {
               type="text"
               className="input input-bordered w-full"
               placeholder="Enter brand"
-              value={formData.brand}
-              onChange={handleChange("brand")}
+              value={formData.car_brand}
+              onChange={handleChange("car_brand")}
             />
           </div>
           <div className="mb-4">
@@ -44,8 +44,8 @@ export default function CarForm() {
             <textarea
               className="textarea textarea-bordered w-full"
               placeholder="Describe the problem"
-              value={formData.problem}
-              onChange={handleChange("problem")}
+              value={formData.problem_description}
+              onChange={handleChange("problem_description")}
             />
           </div>
         </div>

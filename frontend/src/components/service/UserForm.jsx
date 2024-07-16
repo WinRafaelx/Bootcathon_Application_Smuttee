@@ -14,8 +14,8 @@ export default function UserForm() {
             type="text"
             className="input input-bordered w-full"
             placeholder="Enter first name"
-            value={formData.firstName}
-            onChange={handleChange("firstName")}
+            value={formData.name}
+            onChange={handleChange("name")}
           />
         </div>
         <div className="mb-4">
@@ -24,8 +24,8 @@ export default function UserForm() {
             type="text"
             className="input input-bordered w-full"
             placeholder="Enter last name"
-            value={formData.lastName}
-            onChange={handleChange("lastName")}
+            value={formData.lastname}
+            onChange={handleChange("lastname")}
           />
         </div>
         <div className="mb-4">
@@ -34,8 +34,8 @@ export default function UserForm() {
             type="text"
             className="input input-bordered w-full"
             placeholder="Enter phone number"
-            value={formData.phoneNumber}
-            onChange={handleChange("phoneNumber")}
+            value={formData.tel}
+            onChange={handleChange("tel")}
           />
         </div>
         <div className="mb-4">

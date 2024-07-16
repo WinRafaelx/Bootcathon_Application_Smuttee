@@ -7,16 +7,15 @@ export const useFormContext = () => useContext(FormContext);
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
     service: '',
-    date: '',
-    location: '',
-    workshop: '',
-    vehicleNumber: '',
-    brand: '',
+    reserved_datetime: '',
+    workshop_id: '',
+    license_plate: '',
+    car_brand: '',
     model: '',
-    problem: '',
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    problem_description: '',
+    name: '',
+    lastname: '',
+    tel: '',
     email: '',
   });
 

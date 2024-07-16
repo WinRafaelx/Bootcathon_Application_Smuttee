@@ -1,38 +1,13 @@
 import React from "react";
 import { useFormContext } from "../../context/FormContext";
+import { workshop } from "../../constants/workshopLocation";
 
-const workshop = [
-  {
-    company: "company1",
-    location: "location1",
-    phone: "0981234567",
-    openTime: "8:00-17:00",
-    openDays: "Monday-Friday",
-    status: "ว่าง",
-  },
-  {
-    company: "company2",
-    location: "location2",
-    phone: "0981234567",
-    openTime: "8:00-17:00",
-    openDays: "Monday-Friday",
-    status: "ว่าง",
-  },
-  {
-    company: "company3",
-    location: "location3",
-    phone: "0981234567",
-    openTime: "8:00-17:00",
-    openDays: "Monday-Friday",
-    status: "ว่าง",
-  },
-];
 
 export default function DateandLocation() {
   const { formData, handleChange, nextStep, prevStep } = useFormContext();
 
   const handleClick = (workshop) => {
-    handleChange("workshop")({ target: { value: workshop.company } });
+    handleChange("workshop_id")({ target: { value: workshop.workshop_id } });
   };
 
   return (
@@ -53,8 +28,8 @@ export default function DateandLocation() {
           <input
             type="datetime-local"
             className="input input-bordered w-full"
-            value={formData.date}
-            onChange={handleChange("date")}
+            value={formData.reserved_datetime}
+            onChange={handleChange("reserved_datetime")}
           />
         </div>
         <div className="divider divider-horizontal"></div>
@@ -76,9 +51,9 @@ export default function DateandLocation() {
       <div className="mx-40">
         {workshop.map((workshop) => (
           <div
-            key={workshop.company}
+            key={workshop.workshop_id}
             className={`grid grid-cols-5 w-full rounded-lg shadow-lg mb-4 cursor-pointer  ${
-              formData.workshop === workshop.company
+              formData.workshop_id === workshop.workshop_id
                 ? "bg-primary text-white"
                 : "bg-white"
             } `}

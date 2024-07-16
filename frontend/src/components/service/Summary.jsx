@@ -1,8 +1,12 @@
 import React from "react";
 import { useFormContext } from "../../context/FormContext";
+import { workshop } from "../../constants/workshopLocation";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Summary() {
   const { formData, prevStep } = useFormContext();
+  const navigate = useNavigate();
 
   function validateFormData(formData) {
     // Iterate over each key in the formData object
@@ -19,10 +23,26 @@ export default function Summary() {
     // Return true if all values are not empty strings
     return true;
   }
-  const handleSubmit = () => {
+
+  function findworkshopLocation(workshopArray,workshop_id) {
+    const workshop = workshopArray.find(w => w.workshop_id === workshop_id);
+    return workshop ? workshop.location : null;
+  }
+  const handleSubmit = async () => {
     if (validateFormData(formData)) {
-      // TODO: Submit form data to the server
-      alert("Form submitted successfully");
+      try {
+        const response = await axios.post("http://localhost:8000/api/reservations/add", formData);
+        if (response.status === 201) {
+          alert("Reservation submitted successfully");
+          navigate("/complete");
+        } else {
+          alert("Error submitting reservation");
+        }
+      }
+      catch (error) {
+        console.error("api error",error);
+        alert("Error submitting reservation");
+      }
     } else {
       alert("Please fill in all fields");
     }
@@ -33,30 +53,30 @@ export default function Summary() {
       <h2 className="text-3xl text-center font-bold my-4">Summary</h2>
       <div className="flex flex-col w-full bg-white rounded-lg shadow-lg p-4">
         <div className="mb-4">
-          <h3 className="font-bold">Service</h3>
+          <h3 className="font-bold">บริการ</h3>
           <p>{formData.service}</p>
         </div>
         <div className="mb-4">
-          <h3 className="font-bold">Date</h3>
-          <p>{formData.date}</p>
+          <h3 className="font-bold">วันที่ - เวลา</h3>
+          <p>{formData.reserved_datetime}</p>
         </div>
         <div className="mb-4">
-          <h3 className="font-bold">Location</h3>
-          <p>{formData.location}</p>
+          <h3 className="font-bold">สถานที่</h3>
+          <p>{findworkshopLocation(workshop,formData.workshop_id)}</p>
         </div>
         <div className="mb-4">
-          <h3 className="font-bold">Vehicle Details</h3>
-          <p>Vehicle Number: {formData.vehicleNumber}</p>
-          <p>Brand: {formData.brand}</p>
-          <p>Model: {formData.model}</p>
-          <p>Problem: {formData.problem}</p>
+          <h3 className="font-bold">ข้อมูลรถ</h3>
+          <p>ทะเบียนรถยนต์: {formData.license_plate}</p>
+          <p>ยี่ห้อรถยนต์: {formData.car_brand}</p>
+          <p>รุ่น: {formData.model}</p>
+          <p>ปัญหา: {formData.problem_description}</p>
         </div>
         <div className="mb-4">
-          <h3 className="font-bold">User Details</h3>
-          <p>First Name: {formData.firstName}</p>
-          <p>Last Name: {formData.lastName}</p>
-          <p>Phone Number: {formData.phoneNumber}</p>
-          <p>Email: {formData.email}</p>
+          <h3 className="font-bold">ข้อมูลของคุณ</h3>
+          <p>ชื่อ: {formData.name}</p>
+          <p>นามสกุล: {formData.lastName}</p>
+          <p>เบอร์โทรศัพท์(มือถือ): {formData.tel}</p>
+          <p>อีเมล: {formData.email}</p>
         </div>
       </div>
       <div className="flex m-4 justify-center">
