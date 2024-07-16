@@ -1,9 +1,15 @@
 import React from "react";
 import NavBar from "../components/NavBar";
+import { useChat } from "../context/ChatContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const { message, handleChange, setInitialChatMessage } = useChat();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    setInitialChatMessage(message);
+    navigate("/chat");
   }
   return (
     <>
@@ -16,6 +22,8 @@ export default function Home() {
               type="text"
               placeholder="พิมพ์ปัญหาของคุณ"
               className="input input-bordered w-[80%]"
+              value={message}
+              onChange={handleChange}
             />
             <button className="btn btn-primary">วิเคราะห์ปัญหา</button>
           </form>
@@ -24,7 +32,7 @@ export default function Home() {
           className="hero h-[300px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)",
+              "url(https://avatars.mds.yandex.net/get-altay/1938975/2a00000171ec985aa76081aac0b7642e1d47/orig)",
           }}
         >
           <div className="hero-overlay bg-opacity-60"></div>

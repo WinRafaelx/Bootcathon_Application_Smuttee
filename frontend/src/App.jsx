@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FormProvider } from "./context/FormContext";
+import { ChatProvider } from "./context/ChatContext";
 
 import Home from "./pages/Home";
 import ServicePage from "./pages/Service/ServicePage";
@@ -13,7 +14,7 @@ function App() {
   return (
     <>
     <FormProvider>
-
+      <ChatProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,6 +28,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </ChatProvider>
     </FormProvider>
     </>
   );

@@ -1,28 +1,51 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, useCallback } from "react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import { useChat } from "../context/ChatContext";
 
 export default function ChatPage() {
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { initialMessage, setInitialChatMessage } = useChat();
+
+  const sendMessage = useCallback((message) => {
+    setChatLog((prevChatLog) => [
+      ...prevChatLog,
+      { type: "user", message: message },
+    ]);
+    try {
+      setIsLoading(true);
+      axios
+        .post("http://localhost:8000/api/chat", { message })
+        .then((response) => {
+          setChatLog((prevChatLog) => [
+            ...prevChatLog,
+            { type: "bot", message: response.data },
+          ]);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialMessage) {
+      sendMessage(initialMessage);
+      setInitialChatMessage(""); // Clear the initial message after sending
+    }
+  }, [initialMessage, setInitialChatMessage, sendMessage]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    setChatLog((prevChatLog) => [
-      ...prevChatLog,
-      { type: "user", message: inputValue },
-    ]);
-
-    sendMessage(inputValue);
-
-    setInputValue("");
+    if (inputValue.trim()) {
+      sendMessage(inputValue);
+      setInputValue("");
+    }
   };
 
-  const sendMessage = (message) => {
-   // function here
-  };
   return (
     <>
       <NavBar />
@@ -45,8 +68,8 @@ export default function ChatPage() {
                       className={`${
                         message.type === "user"
                           ? "bg-[#ccdffa]"
-                          : "bg-white border-4 border-gray-600"
-                      } rounded-lg p-4 text-black max-w-sm`}
+                          : "bg-white border-2 border-gray-600"
+                      } rounded-lg p-4 text-black`}
                     >
                       {message.message}
                     </div>
@@ -54,7 +77,7 @@ export default function ChatPage() {
                 ))}
                 {isLoading && (
                   <div key={chatLog.length} className="flex justify-start">
-                    <div className="bg-white border-4 border-gray-600 rounded-lg p-4 max-w-sm">
+                    <div className="bg-white border-2 border-gray-600 rounded-lg p-4 max-w-sm">
                       <span className="loading loading-dots loading-sm"></span>
                     </div>
                   </div>
