@@ -27,9 +27,9 @@ function App() {
                 <Route
                   index
                   element={
-                    <ProtectedRoute>
+                    // <ProtectedRoute>
                       <ScheduleManagement />
-                    </ProtectedRoute>
+                    // </ProtectedRoute> 
                   }
                 />
                 <Route path="signup" element={<Signup />} />

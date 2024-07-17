@@ -18,28 +18,25 @@ export default function CalendarDetailModal({
             <strong>Service:</strong> {appointment.service}
           </div>
           <div className="mb-2">
-            <strong>Date:</strong> {new Date(appointment.date).toLocaleString()}
+            <strong>Date:</strong> {new Date(appointment.start).toLocaleString()}
           </div>
           <div className="mb-2">
-            <strong>Address:</strong> {appointment.address}
+            <strong>Vehicle Number:</strong> {appointment.license_plate}
           </div>
           <div className="mb-2">
-            <strong>Vehicle Number:</strong> {appointment.vehicleNumber}
-          </div>
-          <div className="mb-2">
-            <strong>Brand:</strong> {appointment.brand}
+            <strong>Brand:</strong> {appointment.car_brand}
           </div>
           <div className="mb-2">
             <strong>Model:</strong> {appointment.model}
           </div>
           <div className="mb-2">
-            <strong>Problem:</strong> {appointment.problem}
+            <strong>Problem:</strong> {appointment.problem_description}
           </div>
           <div className="mb-2">
-            <strong>Name:</strong> {appointment.fname} {appointment.lname}
+            <strong>Name:</strong> {appointment.name} {appointment.lastname}
           </div>
           <div className="mb-2">
-            <strong>Phone Number:</strong> {appointment.phoneNumber}
+            <strong>Phone Number:</strong> {appointment.tel}
           </div>
           <div className="mb-2">
             <strong>Email:</strong> {appointment.email}
@@ -47,19 +44,19 @@ export default function CalendarDetailModal({
           <div className="flex justify-end space-x-4">
             <button
               onClick={() => onEdit(appointment)}
-              className="btn btn-info text-white px-4 py-2"
+              className="btn btn-info px-4 py-2"
             >
               Edit
             </button>
             <button
               onClick={() => onDelete(appointment)}
-              className="btn btn-error text-white px-4 py-2"
+              className="btn btn-error px-4 py-2"
             >
               Delete
             </button>
             <button
               onClick={onRequestClose}
-              className="btn text-white px-4 py-2"
+              className="btn px-4 py-2"
             >
               Close
             </button>

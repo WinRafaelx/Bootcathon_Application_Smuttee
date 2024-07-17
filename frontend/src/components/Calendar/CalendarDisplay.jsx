@@ -7,13 +7,12 @@ import CustomToolbar from "./CustomToolbar";
 import { getAppointment, createAppointment, updateAppointment, deleteAppointment } from "../../services/AppointmentService";
 import CalendarModal from "./CalendarModal";
 import CalendarDetailModal from "./CalendarDetailModal";
+import { reservationMockup } from "../../constants/resevationMockup";
 
 const localizer = dayjsLocalizer(dayjs);
 /*
   NOTE: CRUD completed for appointments
   TODO: Click to see each day's appointments or show more with popup
-
-  FIX: Modal
 */
 export default function CalendarDisplay() {
   const [appointments, setAppointments] = useState([]);
@@ -67,7 +66,7 @@ export default function CalendarDisplay() {
       <div className="p-6">
         <Calendar
           localizer={localizer}
-          events={appointments}
+          events={reservationMockup}
           startAccessor="start"
           endAccessor="end"
           style={{ height: "75vh" }}
@@ -76,7 +75,7 @@ export default function CalendarDisplay() {
             toolbar: CustomToolbar,
           }}
           selectable
-          onSelectSlot={handleSelectSlot}
+          // onSelectSlot={handleSelectSlot}
           onSelectEvent={handleSelectAppointment}
         />
         <CalendarModal
