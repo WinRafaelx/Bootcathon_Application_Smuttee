@@ -30,10 +30,6 @@ export default function Home() {
         </div>
         <div
           className="hero h-[300px] bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url(https://avatars.mds.yandex.net/get-altay/1938975/2a00000171ec985aa76081aac0b7642e1d47/orig)",
-          }}
         >
           <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content text-neutral-content text-center">
