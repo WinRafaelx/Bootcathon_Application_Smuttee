@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/appointments';
+const API_URL = 'http://localhost:8000/api/workshop_admin/getReservations';
 
 const getAppointment = () => {
   return axios.get(API_URL);
