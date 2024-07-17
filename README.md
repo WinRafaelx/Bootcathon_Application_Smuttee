@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Mobil Support</h1>
   <p>Shcedule Platform & AI intregration</p>
-  <img width="500px" src="./.github/Exxon_Mobil_Logo.svg" alt="Exxon logo">
+  <img width="500px" src="./.github/Exxon_Mobil_Logo.svg.png" alt="Exxon logo">
 </div>
 
 ## ✨ Features
