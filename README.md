@@ -1,5 +1,6 @@
 <div align="center">
   <h1>Mobil Support</h1>
+  <h3>ExxonMobil IT Bootcathon 2024</h3>
   <p>Shcedule Platform & AI intregration</p>
   <img width="500px" src="./.github/Exxon_Mobil_Logo.svg.png" alt="Exxon logo">
 </div>
